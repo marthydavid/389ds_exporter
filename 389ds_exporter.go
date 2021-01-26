@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/marthydavid/389ds_exporter/exporter"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/version"
 	log "github.com/sirupsen/logrus"
-	"github.com/terrycain/389ds_exporter/exporter"
 )
 
 var (
@@ -55,9 +55,9 @@ func StartMetricsServer(bindAddr string) {
 	d.Handle(*metricsPath, promhttp.Handler())
 	d.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte(`<html>
-             <head><title>Consul Exporter</title></head>
+             <head><title>389ds Exporter</title></head>
              <body>
-             <h1>Consul Exporter</h1>
+             <h1>389ds Exporter</h1>
              <p><a href='` + *metricsPath + `'>Metrics</a></p>
              </dl>
              <h2>Build</h2>

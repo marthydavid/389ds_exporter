@@ -1,7 +1,7 @@
 repository:
-    path: github.com/terrycain/389ds_exporter
+    path: github.com/marthydavid/389ds_exporter
 build:
-    flags: -a 
+    flags: -a
     ldflags: |
         -X {{repoPath}}/vendor/github.com/prometheus/common/version.Version={{.Version}}
         -X {{repoPath}}/vendor/github.com/prometheus/common/version.Revision={{.Revision}}

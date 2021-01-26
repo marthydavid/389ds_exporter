@@ -1,6 +1,7 @@
 package exporter
 
 import (
+	"crypto/tls"
 	"errors"
 	"fmt"
 	"strconv"
@@ -140,10 +141,14 @@ func ScrapeMetrics(ldapAddr, ldapUser, ldapPass, ipaDomain string) {
 
 func scrapeAll(ldapAddr, ldapUser, ldapPass, ipaDomain string) error {
 	suffix := "dc=" + strings.Replace(ipaDomain, ".", ",dc=", -1)
-
-	l, err := ldap.Dial("tcp", ldapAddr)
+	serverName := strings.Split(ldapAddr, ":")[0]
+	tlsConf := &tls.Config{
+		ServerName: serverName,
+	}
+	l, err := ldap.DialTLS("tcp", ldapAddr, tlsConf)
 	if err != nil {
 		return err
+		log.Debug("Error connecting to LDAP")
 	}
 	defer l.Close()
 
